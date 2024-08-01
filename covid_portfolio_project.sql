@@ -70,6 +70,7 @@ FROM PortfolioProject.dbo.CovidDeaths
 WHERE location LIKE 'World';
 
 -- Join the CovidDeaths table with the CovidVaccinations table to see how many new vaccinations there were per day
+-- and the proportion of the population thas had been vaccinated
 SELECT CD.continent, CD.location, CD.date, CD.population, CV.new_vaccinations,
 	SUM(CV.new_vaccinations) OVER (PARTITION BY CD.location ORDER BY CD.location, CD.date) AS total_vaccinations,
 	(CAST(SUM(CV.new_vaccinations) OVER (PARTITION BY CD.location ORDER BY CD.date) AS FLOAT) / CD.population) * 100 AS population_vaccinated
